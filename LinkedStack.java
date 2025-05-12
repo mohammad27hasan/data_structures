@@ -45,11 +45,15 @@ class LinkedStack<T> {
     }
 
     void push(T item) {
-        Node newHead = new Node();
-        newHead.data = item;
-        newHead.next = head;
-        head = newHead;
-        size = size + 1;
+        if (item == null) {
+            throw new NullPointerException("The specified element is null");
+        } else {
+            Node newHead = new Node();
+            newHead.data = item;
+            newHead.next = head;
+            head = newHead;
+            size = size + 1;
+        }
     }
 
     T pop() {
