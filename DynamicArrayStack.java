@@ -57,7 +57,9 @@ class DynamicArrayStack<T> {
     
     @SuppressWarnings("unchecked")
     void push(T item) {
-        if (isFull()) {
+        if (item == null) {
+            throw new NullPointerException("The specified element is null");
+        } else if (isFull()) {
             capacity = capacity * 2;
             T[] tempArray = (T[])new Object[capacity];
             for (int i = 0; i < size; i++) {
