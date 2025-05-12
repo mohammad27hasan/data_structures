@@ -56,7 +56,9 @@ class ArrayStack<T> {
     }
     
     void push(T item) {
-        if (isFull()) {
+        if (item == null) {
+            throw new NullPointerException("The specified element is null");
+        } else if (isFull()) {
             throw new RuntimeException("Stack Overflow");
         } else {
             top = top + 1;
