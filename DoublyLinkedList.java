@@ -254,5 +254,6 @@ class DoublyLinkedList<T> {
             iterator = head;
         }
         tail = null;
+        size = 0;
     }
 }
