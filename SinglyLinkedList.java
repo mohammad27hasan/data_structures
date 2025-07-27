@@ -25,16 +25,16 @@ class SinglyLinkedList<T> {
 
     public String toString() {
         Node iterator = head;
-        String s = "[";
+        StringBuilder sb = new StringBuilder("[");
         for (int i = 0; iterator != null; i++) {
-            s = s.concat(String.valueOf(iterator.data));
+            sb.append(iterator.data);
             iterator = iterator.next;
             if (i < size - 1) {
-                s = s.concat(", ");
+                sb.append(", ");
             }
         }
-        s = s.concat("]");
-        return s;
+        sb.append("]");
+        return sb.toString();
     }
 
     boolean contains(Object o) {
@@ -64,23 +64,20 @@ class SinglyLinkedList<T> {
         return headElement();
     }
 
-    T getAfter(T element) {
-        if (head == null || element == null) {
-            throw new java.util.NoSuchElementException(element + " is not present in SinglyLinkedList");
-        } else {
-            Node iterator = head;
-            while (iterator != null) {
-                if (element.equals(iterator.data)) {
-                    if (iterator.next != null) {
-                        return iterator.next.data;
-                    } else {
-                        throw new java.util.NoSuchElementException("After " + element + " there is no element");
-                    }
-                }
-                iterator = iterator.next;
-            }
-            throw new java.util.NoSuchElementException(element + " is not present in SinglyLinkedList");
+    T getAt(int index) {
+        if (head == null) {
+            throw new java.util.NoSuchElementException("DoublyLinkedList is empty");
+        } else if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException("Must be in range [0, " + (size() - 1) + "]");
         }
+        Node iterator = head;
+        for (int i = 0; i < size(); i++) {
+            if (i == index) {
+                return iterator.data;
+            }
+            iterator = iterator.next;
+        }
+        return null;
     }
 
     T getEnd() {
