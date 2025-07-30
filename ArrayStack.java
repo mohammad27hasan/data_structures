@@ -28,15 +28,15 @@ class ArrayStack<T> {
     }
 
     public String toString() {
-        String s = "[";
+        StringBuilder sb = new StringBuilder("[");
         for (int i = 0; i < size; i++) {
-            s = s.concat(String.valueOf(array[i]));
+            sb.append(array[i]);
             if (i < size - 1) {
-                s = s.concat(", ");
+                sb.append(", ");
             }
         }
-        s = s.concat("]");
-        return s;
+        sb.append("]");
+        return sb.toString();
     }
 
     boolean isEmpty() {
