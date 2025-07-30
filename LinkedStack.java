@@ -19,6 +19,14 @@ class LinkedStack<T> {
         return size;
     }
 
+    boolean isEmpty() {
+        if (head == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private void reverse() {
         Node prevPtr = null;
         Node currPtr = head;
