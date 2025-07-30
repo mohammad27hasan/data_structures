@@ -1,7 +1,11 @@
 class LinkedStack<T> {
     private class Node {
-        private T data;
-        private Node next;
+        T data;
+        Node next;
+        Node(T val) {
+            data = val;
+            next = null;
+        }
     }
 
     private Node head;
@@ -15,7 +19,7 @@ class LinkedStack<T> {
         return size;
     }
 
-    private Node reverse(Node head) {
+    private void reverse() {
         Node prevPtr = null;
         Node currPtr = head;
         Node nextPtr = null;
@@ -25,31 +29,30 @@ class LinkedStack<T> {
             prevPtr = currPtr;
             currPtr = nextPtr;            
         }
-        return prevPtr;
+        head = prevPtr;
     }
 
     public String toString() {
-        head = reverse(head);
+        reverse();
         Node iterator = head;
-        String s = "[";
-        for (int i = 0; iterator != null; i++) {
-            s = s.concat(String.valueOf(iterator.data));
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = 0; i < size; i++) {
+            sb.append(iterator.data);
             if (i < size - 1) {
-                s = s.concat(", ");
+                sb.append(", ");
             }
             iterator = iterator.next;
         }
-        s = s.concat("]");
-        head = reverse(head);
-        return s;
+        sb.append("]");
+        reverse();
+        return sb.toString();
     }
 
     void push(T item) {
         if (item == null) {
-            throw new NullPointerException("The specified element is null");
+            throw new NullPointerException("The specified item is null");
         } else {
-            Node newHead = new Node();
-            newHead.data = item;
+            Node newHead = new Node(item);
             newHead.next = head;
             head = newHead;
             size = size + 1;
