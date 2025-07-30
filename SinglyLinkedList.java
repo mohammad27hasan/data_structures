@@ -1,7 +1,12 @@
 class SinglyLinkedList<T> {
+    
     private class Node {
         T data;
         Node next;
+        Node(T val) {
+            data = val;
+            next = null;
+        }
     }
 
     private Node head;
@@ -26,19 +31,19 @@ class SinglyLinkedList<T> {
     public String toString() {
         Node iterator = head;
         StringBuilder sb = new StringBuilder("[");
-        for (int i = 0; iterator != null; i++) {
+        for (int i = 0; i < size; i++) {
             sb.append(iterator.data);
-            iterator = iterator.next;
             if (i < size - 1) {
                 sb.append(", ");
             }
+            iterator = iterator.next;
         }
         sb.append("]");
         return sb.toString();
     }
 
     boolean contains(Object o) {
-        if (o == null) {
+        if (o == null || head == null) {
             return false;
         } else {
             Node iterator = head;
@@ -67,11 +72,11 @@ class SinglyLinkedList<T> {
     T getAt(int index) {
         if (head == null) {
             throw new java.util.NoSuchElementException("DoublyLinkedList is empty");
-        } else if (index < 0 || index >= size()) {
-            throw new IndexOutOfBoundsException("Must be in range [0, " + (size() - 1) + "]");
+        } else if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Must be in range [0, " + (size - 1) + "]");
         }
         Node iterator = head;
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < size; i++) {
             if (i == index) {
                 return iterator.data;
             }
@@ -94,10 +99,9 @@ class SinglyLinkedList<T> {
 
     void insertBeginning(T item) {
         if (item == null) {
-            throw new NullPointerException("The specified element is null");
+            throw new NullPointerException("The specified item is null");
         } else {
-            Node newNode = new Node();
-            newNode.data = item;
+            Node newNode = new Node(item);
             newNode.next = head;
             head = newNode;
             size = size + 1;
@@ -110,27 +114,22 @@ class SinglyLinkedList<T> {
 
     void insertAfter(T element, T item) {
         if (item == null) {
-            throw new NullPointerException("The specified element is null");
+            throw new NullPointerException("The specified item is null");
         } else if (head == null || element == null) {
             throw new java.util.NoSuchElementException(element + " is not present in SinglyLinkedList");
         } else {
-            boolean available = false;
             Node iterator = head;
             while (iterator != null) {
                 if (element.equals(iterator.data)) {
-                    Node newNode = new Node();
-                    newNode.data = item;
+                    Node newNode = new Node(item);
                     newNode.next = iterator.next;
                     iterator.next = newNode;
                     size = size + 1;
-                    available = true;
-                    break;
+                    return;
                 }
                 iterator = iterator.next;
             }
-            if (!available) {
-                throw new java.util.NoSuchElementException(element + " is not present in SinglyLinkedList");
-            }
+            throw new java.util.NoSuchElementException(element + " is not present in SinglyLinkedList");
         }
     }
 
@@ -138,16 +137,15 @@ class SinglyLinkedList<T> {
         if (head == null) {
             insertBeginning(item);
         } else if (item == null) {
-            throw new NullPointerException("The specified element is null");
+            throw new NullPointerException("The specified item is null");
         } else {
-            Node newNode = new Node();
-            newNode.data = item;
-            newNode.next = null;
+            Node newNode = new Node(item);
             Node iterator = head;
             while (iterator.next != null) {
                 iterator = iterator.next;
             }
             iterator.next = newNode;
+            newNode.next = null;
             size = size + 1;
         }
     }
@@ -156,11 +154,11 @@ class SinglyLinkedList<T> {
         if (head == null) {
             throw new java.util.NoSuchElementException("SinglyLinkedList is empty");
         } else {
-            Node obsoleteNode = head;
+            Node temp = head;
             head = head.next;
-            obsoleteNode.data = null;
-            obsoleteNode.next = null;
-            obsoleteNode = null;
+            temp.data = null;
+            temp.next = null;
+            temp = null;
             size = size - 1;
         }
     }
@@ -169,28 +167,24 @@ class SinglyLinkedList<T> {
         if (head == null || element == null) {
             throw new java.util.NoSuchElementException(element + " is not present in SinglyLinkedList");
         } else {
-            boolean available = false;
             Node iterator = head;
             while (iterator != null) {
                 if (element.equals(iterator.data)) {
-                    if (iterator.next != null) {
-                        Node obsoleteNode = iterator.next;
-                        iterator.next = iterator.next.next;
-                        obsoleteNode.data = null;
-                        obsoleteNode.next = null;
-                        obsoleteNode = null;
-                        size = size - 1;
-                        available = true;
-                        break;
-                    } else {
+                    if (iterator.next == null) {
                         throw new java.util.NoSuchElementException("After " + element + " there is no element");
+                    } else {
+                        Node temp = iterator.next;
+                        iterator.next = temp.next;
+                        temp.data = null;
+                        temp.next = null;
+                        temp = null;
+                        size = size - 1;
+                        return;
                     }
                 }
                 iterator = iterator.next;
             }
-            if (!available) {
-                throw new java.util.NoSuchElementException(element + "is not present in SinglyLinkedList");
-            }
+            throw new java.util.NoSuchElementException(element + "is not present in SinglyLinkedList");
         }
     }
 
@@ -212,52 +206,21 @@ class SinglyLinkedList<T> {
         }
     }
 
-    void remove(T element) {
-        if (head == null || element == null) {
-            throw new java.util.NoSuchElementException(element + " is not present in SinglyLinkedList");
-        } else if (element.equals(head.data)) {
-            removeBeginning();
-        } else {
-            boolean available = false;
-            Node curr = head.next;
-            Node prev = head;
-            while (curr != null) {
-                if (element.equals(curr.data)) {
-                    prev.next = curr.next;
-                    curr.data = null;
-                    curr.next = null;
-                    size = size - 1;
-                    available = true;
-                    break;
-                }
-                prev = curr;
-                curr = curr.next;
-            }
-            if (!available) {
-                throw new java.util.NoSuchElementException(element + " is not present in SinglyLinkedList");
-            }
-        }
-    }
-
     void replace(T element, T item) {
         if (item == null) {
-            throw new NullPointerException("The specified element is null");
+            throw new NullPointerException("The specified item is null");
         } else if (head == null || element == null) {
             throw new java.util.NoSuchElementException(element + " is not present in SinglyLinkedList");
         } else {
-            boolean available = false;
             Node iterator = head;
             while (iterator != null) {
                 if (element.equals(iterator.data)) {
                     iterator.data = item;
-                    available = true;
-                    break;
+                    return;
                 }
                 iterator = iterator.next;
             }
-            if (!available) {
-                throw new java.util.NoSuchElementException(element + " is not present in SinglyLinkedList");
-            }
+            throw new java.util.NoSuchElementException(element + " is not present in SinglyLinkedList");
         }
     }
 
