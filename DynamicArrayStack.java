@@ -28,15 +28,15 @@ class DynamicArrayStack<T> {
     }
 
     public String toString() {
-        String s = "[";
+        StringBuilder sb = new StringBuilder("[");
         for (int i = 0; i < size; i++) {
-            s = s.concat(String.valueOf(array[i]));
+            sb.append(array[i]);
             if (i < size - 1) {
-                s = s.concat(", ");
+                sb.append(", ");
             }
         }
-        s = s.concat("]");
-        return s;
+        sb.append("]");
+        return sb.toString();
     }
 
     boolean isEmpty() {
@@ -58,7 +58,7 @@ class DynamicArrayStack<T> {
     @SuppressWarnings("unchecked")
     void push(T item) {
         if (item == null) {
-            throw new NullPointerException("The specified element is null");
+            throw new NullPointerException("The specified item is null");
         } else if (isFull()) {
             capacity = capacity * 2;
             T[] tempArray = (T[])new Object[capacity];
