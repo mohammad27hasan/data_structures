@@ -1,5 +1,4 @@
 class SinglyLinkedList<T> {
-    
     private class Node {
         T data;
         Node next;
@@ -54,6 +53,21 @@ class SinglyLinkedList<T> {
                 iterator = iterator.next;
             }
             return false;
+        }
+    }
+
+    int indexOf(Object o) {
+        if (o == null || head == null) {
+            return -1;
+        } else {
+            Node iterator = head;
+            for (int i = 0; i < size; i++) {
+                if (o.equals(iterator.data)) {
+                    return i;
+                }
+                iterator = iterator.next;
+            }
+            return -1;
         }
     }
 
