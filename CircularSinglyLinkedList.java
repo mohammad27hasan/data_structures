@@ -1,5 +1,4 @@
 class CircularSinglyLinkedList<T> {
-    
     private class Node {
         T data;
         Node next;
@@ -113,6 +112,21 @@ class CircularSinglyLinkedList<T> {
                 iterator = iterator.next;
             } while (iterator != tail.next);
             throw new java.util.NoSuchElementException(element + " is not present in CircularSinglyLinkedList");
+        }
+    }
+
+    int indexOf(Object o) {
+        if (o == null || head == null) {
+            return -1;
+        } else {
+            Node iterator = head;
+            for (int i = 0; i < size; i++) {
+                if (o.equals(iterator.data)) {
+                    return i;
+                }
+                iterator = iterator.next;
+            }
+            return -1;
         }
     }
 
