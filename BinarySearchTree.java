@@ -13,11 +13,9 @@ class BinarySearchTree<T extends Comparable<T>> {
     }
     private Node root;
     private int size;
-    private int count;
     BinarySearchTree() {
         root = null;
         size = 0;
-        count = 0;
     }
 
     int size() {
@@ -42,71 +40,62 @@ class BinarySearchTree<T extends Comparable<T>> {
     boolean contains(T key) {
         if (key == null) {
             return false;
-        } else {
-            return (search(root, key) != null);
         }
+        return (search(root, key) != null);
     }
 
     private Node successor(Node node) {
         if (node.right != null) {
             return minimum(node.right);
-        } else {
-            Node successor = node.parent;
-            while ((successor != null) && (successor.right == node)) {
-                node = successor;
-                successor = successor.parent;
-            }
-            return successor;
         }
+        Node successor = node.parent;
+        while ((successor != null) && (successor.right == node)) {
+            node = successor;
+            successor = successor.parent;
+        }
+        return successor;
     }
 
     T successor(T element) {
         if ((root == null) || (element == null)) {
             throw new java.util.NoSuchElementException(element + " is not present in BinarySearchTree");
-        } else {
-            Node findedNode = search(root, element);
-            if (findedNode == null) {
-                throw new java.util.NoSuchElementException(element + " is not present in BinarySearchTree");
-            } else {
-                Node successor = successor(findedNode);
-                if (successor == null) {
-                    throw new java.util.NoSuchElementException("There is no successor of " + element);
-                } else {
-                    return successor.data;
-                }
-            }
         }
+        Node finder = search(root, element);
+        if (finder == null) {
+            throw new java.util.NoSuchElementException(element + " is not present in BinarySearchTree");
+        }
+        Node successor = successor(finder);
+        if (successor == null) {
+            throw new java.util.NoSuchElementException("There is no successor of " + element);
+        }
+        return successor.data;
     }
 
     private Node predecessor(Node node) {
         if (node.left != null) {
             return maximum(node.left);
-        } else {
-            Node predecessor = node.parent;
-            while ((predecessor != null) && (predecessor.left == node)) {
-                node = predecessor;
-                predecessor = predecessor.parent;
-            }
-            return predecessor;
         }
+        Node predecessor = node.parent;
+        while ((predecessor != null) && (predecessor.left == node)) {
+            node = predecessor;
+            predecessor = predecessor.parent;
+        }
+        return predecessor;
     }
 
     T predecessor(T element) {
         if ((root == null) || (element == null)) {
             throw new java.util.NoSuchElementException(element + " is not present in BinarySearchTree");
-        } else {
-            Node findedNode = search(root, element);
-            if (findedNode == null) {
-                throw new java.util.NoSuchElementException(element + " is not present in BinarySearchTree");
-            } else {
-                Node predecessor = predecessor(findedNode);
-                if (predecessor == null) {
-                    throw new java.util.NoSuchElementException("There is no predecessor of " + element);
-                } else {
-                    return predecessor.data;
-                }
-            }
         }
+        Node finder = search(root, element);
+        if (finder == null) {
+            throw new java.util.NoSuchElementException(element + " is not present in BinarySearchTree");
+        }
+        Node predecessor = predecessor(finder);
+        if (predecessor == null) {
+            throw new java.util.NoSuchElementException("There is no predecessor of " + element);
+        }
+        return predecessor.data;
     }
 
     private Node maximum(Node maxNode) {
@@ -119,9 +108,8 @@ class BinarySearchTree<T extends Comparable<T>> {
     T maxElement() {
         if (root == null) {
             throw new java.util.NoSuchElementException("BinarySearchTree is empty");
-        } else {
-            return maximum(root).data;
         }
+        return maximum(root).data;
     }
 
     private Node minimum(Node minNode) {
@@ -134,141 +122,141 @@ class BinarySearchTree<T extends Comparable<T>> {
     T minElement() {
         if (root == null) {
             throw new java.util.NoSuchElementException("BinarySearchTree is empty");
-        } else {
-            return minimum(root).data;
         }
+        return minimum(root).data;
     }
 
     void insert(T item) {
         if (item == null) {
             throw new NullPointerException("The specified item is null");
-        } else {
+        }
+        if (root == null) {
             Node newNode = new Node(item);
-            if (root == null) {
-                root = newNode;
-                size = size + 1;
-            } else {
-                Node iterator = root;
-                while (iterator != null) {
-                    if (item.equals(iterator.data)) {
-                        return;
-                    } else if (item.compareTo(iterator.data) < 0) {
-                        if (iterator.left == null) {
-                            iterator.left = newNode;
-                            newNode.parent = iterator;
-                            size = size + 1;
-                        }
-                        iterator = iterator.left;
-                    } else {
-                        if (iterator.right == null) {
-                            iterator.right = newNode;
-                            newNode.parent = iterator;
-                            size = size + 1;
-                        }
-                        iterator = iterator.right;
-                    }
+            root = newNode;
+            size = size + 1;
+            return;
+        }
+        Node iterator = root;
+        int comparator = 0;
+        while (iterator != null) {
+            comparator = item.compareTo(iterator.data);
+            if (comparator < 0) {
+                if (iterator.left == null) {
+                    Node newNode = new Node(item);
+                    iterator.left = newNode;
+                    newNode.parent = iterator;
+                    size = size + 1;
+                    return;
                 }
+                iterator = iterator.left;
+            } else if (comparator > 0) {
+                if (iterator.right == null) {
+                    Node newNode = new Node(item);
+                    iterator.right = newNode;
+                    newNode.parent = iterator;
+                    size = size + 1;
+                    return;
+                }
+                iterator = iterator.right;
             }
         }
     }
 
-    private Node delete(Node root, T element) {
-        if (root == null) {
+    private void destroy(Node node) {
+        node.parent = null;
+        node.left = null;
+        node.data = null;
+        node.right = null;
+        node = null;
+    }
+
+    private Node delete(Node node, T element) {
+        if (node == null) {
             throw new java.util.NoSuchElementException(element + " is not present in BinarySearchTree");
-        } else {
-            int comparedValue = element.compareTo(root.data);
-            if (comparedValue < 0) {
-                root.left = delete(root.left, element);
-            } else if (comparedValue > 0) {
-                root.right = delete(root.right, element);
-            } else { // element found
-                Node temp = null;
-                if ((root.left != null) && (root.right != null)) { // two children
-                    temp = maximum(root.left);
-                    root.data = temp.data;
-                    root.left = delete(root.left, temp.data);
-                } else { // zero or one child
-                    temp = root;
-                    if (root.left == null) {
-                        root = root.right;
-                    } else {
-                        root = root.left;
-                    }
-                    temp.left = null;
-                    temp.data = null;
-                    temp.right = null;
+        }
+        int comparator = element.compareTo(node.data);
+        if (comparator < 0) {
+            node.left = delete(node.left, element);
+        } else if (comparator > 0) {
+            node.right = delete(node.right, element);
+        } else { // element found
+            if ((node.left != null) && (node.right != null)) { // two children
+                Node predecessor = maximum(node.left);
+                node.data = predecessor.data;
+                node.left = delete(node.left, predecessor.data);
+            } else { // zero or one child
+                Node temp = node;
+                if (node.left == null) {
+                    node = node.right;
+                } else {
+                    node = node.left;
                 }
+                destroy(temp);
             }
         }
-        return root;
+        return node;
     }
 
     void remove(T element) {
         if ((root == null) || (element == null)) {
             throw new java.util.NoSuchElementException(element + " is not present in BinarySearchTree");
+        }
+        root = delete(root, element);
+        size = size - 1;
+    }
+
+    private void modifyStringBuilder(StringBuilder sb) {
+        int start = sb.lastIndexOf(", ");
+        if (start != -1) {
+            int end = start + 2;
+            sb.replace(start, end, "]");
         } else {
-            root = delete(root, element);
-            size = size - 1;
+            sb.append("]");
         }
     }
 
-    private StringBuilder preorder(Node root, StringBuilder sb) {
-        if (root != null) {
-            sb.append(root.data);
-            if (count < (size - 1)) {
-                sb.append(", ");
-            }
-            count = count + 1;
-            preorder(root.left, sb);
-            preorder(root.right, sb);
+    private StringBuilder preorder(Node node, StringBuilder sb) {
+        if (node != null) {
+            sb.append(node.data + ", ");
+            preorder(node.left, sb);
+            preorder(node.right, sb);
         }
         return sb;
     }
 
     String preorder() {
         StringBuilder sb = preorder(root, new StringBuilder("["));
-        sb.append("]");
-        count = 0;
+        modifyStringBuilder(sb);
         return sb.toString();
     }
 
-    private StringBuilder inorder(Node root, StringBuilder sb) {
-        if (root != null) {
-            inorder(root.left, sb);
-            sb.append(root.data);
-            if (count < (size - 1)) {
-                sb.append(", ");
-            }
-            count = count + 1;
-            inorder(root.right, sb);
+    private StringBuilder inorder(Node node, StringBuilder sb) {
+        if (node != null) {
+            inorder(node.left, sb);
+            sb.append(node.data + ", ");
+            inorder(node.right, sb);
         }
         return sb;
     }
 
     String inorder() {
         StringBuilder sb = inorder(root, new StringBuilder("["));
-        sb.append("]");
-        count = 0;
+        modifyStringBuilder(sb);
         return sb.toString();
     }
 
-    private StringBuilder postorder(Node root, StringBuilder sb) {
-        if (root != null) {
-            postorder(root.left, sb);
-            postorder(root.right, sb);
-            sb.append(root.data);
-            if (count < (size - 1)) {
-                sb.append(", ");
-            }
-            count = count + 1;
+    private StringBuilder postorder(Node node, StringBuilder sb) {
+        if (node != null) {
+            postorder(node.left, sb);
+            postorder(node.right, sb);
+            sb.append(node.data + ", ");
         }
         return sb;
     }
 
     String postorder() {
         StringBuilder sb = postorder(root, new StringBuilder("["));
-        sb.append("]");
-        count = 0;
+        modifyStringBuilder(sb);
         return sb.toString();
     }
 
