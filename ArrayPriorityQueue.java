@@ -33,11 +33,11 @@ class ArrayPriorityQueue<T> {
         return (size == capacity);       
     }
 
-    private void insertAt(int index, Item item) {
+    private void insertAt(int index, Item newItem) {
         for (int i = size++; i > index; i--) {
             buffer[i] = buffer[i - 1];
         }
-        buffer[index] = item;
+        buffer[index] = newItem;
     }
 
     void insert(T element, int priority) {
@@ -50,15 +50,12 @@ class ArrayPriorityQueue<T> {
         if (isFull()) {
             throw new IllegalStateException("ArrayPriorityQueue is full");
         }
+        Item newItem = new Item(element, priority);
         int index = 0;
         while ((index < size) && (buffer[index].priority <= priority)) {
             index = index + 1;
         }
-        insertAt(index, new Item(element, priority));
-    }
-
-    void insert(T element) {
-        insert(element, size + 1);
+        insertAt(index, newItem);
     }
 
     private void removeAt(int index) {
