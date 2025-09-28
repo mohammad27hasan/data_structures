@@ -47,10 +47,11 @@ public class MinPriorityQueue<T> {
         return (size == capacity);
     }
 
-    private void resize() {
+    private void grow() {
         capacity = capacity + DEFAULT_CAPACITY;
         Entry[] temp = createEntryArray(capacity);
-        for (int i = 0; i <= index; i++) {
+        final int LENGTH = index + 1;
+        for (int i = 0; i < LENGTH; i++) {
             temp[i] = vector[i];
         }
         vector = temp;
@@ -83,9 +84,10 @@ public class MinPriorityQueue<T> {
             throw new IllegalArgumentException("Priority is less than 1");
         }
         if (isFull()) {
-            resize();
+            grow();
         }
-        for (int i = 0; i <= index; i++) {
+        final int LENGTH = index + 1;
+        for (int i = 0; i < LENGTH; i++) {
             if (vector[i].priority == priority) {
                 Entry iterator = vector[i];
                 while (iterator.next != null) {
@@ -105,7 +107,7 @@ public class MinPriorityQueue<T> {
         insert(item, priority);
     }
 
-    public T min() {
+    public T minElement() {
         if (isEmpty()) {
             throw new java.util.NoSuchElementException("Min priority queue is empty");
         }
@@ -113,7 +115,7 @@ public class MinPriorityQueue<T> {
     }
 
     public T findMin() {
-        return min();
+        return minElement();
     }
 
     private int left(int i) {
@@ -124,23 +126,20 @@ public class MinPriorityQueue<T> {
         return (2 * i + 2);
     }
 
-    private boolean isExists(int i) {
-        return (i <= index);
-    }
-
     private void bubbleDown(int p) {
         int j = 0;
         int l = 0;
         int r = 0;
+        final int LENGTH = index + 1;
         do {
             j = -1;
             r = right(p);
-            if (isExists(r) && (vector[r].priority < vector[p].priority)) {
+            if ((r < LENGTH) && (vector[r].priority < vector[p].priority)) {
                 l = left(p);
                 j = (vector[l].priority < vector[r].priority) ? l : r;
             } else {
                 l = left(p);
-                if (isExists(l) && (vector[l].priority < vector[p].priority)) {
+                if ((l < LENGTH) && (vector[l].priority < vector[p].priority)) {
                     j = l;
                 }
             }
@@ -191,9 +190,10 @@ public class MinPriorityQueue<T> {
         }
         StringBuilder sb = new StringBuilder("[");
         Entry[] temp = createEntryArray(capacity);
-        final int LENGTH = index + 1;
         final int SIZE = size;
+        final int LENGTH = index + 1;
         final int COMMA_SIZE = size - 1;
+        final int INDEX = index;
         for (int i = 0; i < SIZE; i++) {
             if (i < LENGTH) {
                 temp[i] = vector[0];
@@ -204,6 +204,7 @@ public class MinPriorityQueue<T> {
             }
         }
         size = SIZE;
+        index = INDEX;
         vector = temp;
         sb.append("]");
         return sb.toString();
