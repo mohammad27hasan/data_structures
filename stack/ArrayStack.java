@@ -47,10 +47,11 @@ public class ArrayStack<T> {
 
     public String toString() {
         StringBuilder sb = new StringBuilder("[");
-        int commaSize = size - 1;
-        for (int i = 0; i < size; i++) {
+        final int SIZE = size();
+        final int COMMA_SIZE = SIZE - 1;
+        for (int i = 0; i < SIZE; i++) {
             sb.append(array.get(i));
-            if (i < commaSize) {
+            if (i < COMMA_SIZE) {
                 sb.append(", ");
             }
         }
