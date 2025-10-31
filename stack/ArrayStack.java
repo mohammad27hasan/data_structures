@@ -3,15 +3,13 @@ package ds.stack;
 public class ArrayStack<T> {
     private int top;
     private java.util.ArrayList<T> array;
-    public ArrayStack() {
-        this(10);
-    }
-
-    public ArrayStack(int initialCapacity) {
-        if (initialCapacity < 1) {
-            throw new IllegalArgumentException("Initial capacity is less than 1");
+    private int capacity;
+    public ArrayStack(int specifiedCapacity) {
+        if (specifiedCapacity < 1) {
+            throw new IllegalArgumentException("Specified capacity is less than 1");
         }
-        array = new java.util.ArrayList<T>(initialCapacity);
+        capacity = specifiedCapacity;
+        array = new java.util.ArrayList<T>(specifiedCapacity);
         top = -1;
     }
 
@@ -23,10 +21,17 @@ public class ArrayStack<T> {
         return (top == -1);
     }
 
+    public boolean isFull() {
+        return (top == (capacity - 1));
+    }
+
     public void push(T item) {
         if (item == null) {
-            throw new NullPointerException("The specified item is null");
-        } 
+            throw new NullPointerException("Specified item is null");
+        }
+        if (isFull()) {
+            throw new IllegalStateException("Array stack is full");
+        }
         top++;
         array.add(item);
     }
