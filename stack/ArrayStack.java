@@ -4,13 +4,13 @@ public class ArrayStack<T> {
     private int top;
     private java.util.ArrayList<T> array;
     private int capacity;
-    public ArrayStack(int specifiedCapacity) {
-        if (specifiedCapacity < 1) {
+    public ArrayStack(int capacity) {
+        if (capacity < 1) {
             throw new IllegalArgumentException("Specified capacity is less than 1");
         }
-        capacity = specifiedCapacity;
-        array = new java.util.ArrayList<T>(specifiedCapacity);
         top = -1;
+        array = new java.util.ArrayList<T>(capacity);
+        this.capacity = capacity;
     }
 
     public int size() {
