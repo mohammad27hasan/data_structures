@@ -34,15 +34,19 @@ public class DynamicQueue<T> {
     }
 
     private void grow() {
-        capacity = ((capacity * 3) / 2) + 1;
+        int cap = capacity;
+        capacity = capacity * 3 / 2 + 1;
         var temp = new java.util.ArrayList<T>(java.util.Collections.nCopies(capacity, null));
-        int back = -1;
-        while (!isEmpty()) {
-            temp.set(++back, dequeue());
+        int i = front;
+        int j = 0;
+        while (i != rear) {
+            temp.set(j, array.get(i));
+            i = (i + 1) % cap;
+            j++;
         }
         front = 0;
-        rear = back;
-        size = back + 1;
+        rear = j;
+        size = j + 1;
         array = temp;
     }
 
@@ -78,7 +82,7 @@ public class DynamicQueue<T> {
 
     public T front() {
         if (isEmpty()) {
-            throw new IllegalStateException("Dynamic queue is empty");
+            throw new java.util.NoSuchElementException("Dynamic queue is empty");
         }
         return array.get(front);
     }
