@@ -51,6 +51,9 @@ public class ArrayStack<T> {
     }
 
     public String toString() {
+        if (isEmpty()) {
+            return "[]";
+        }
         StringBuilder sb = new StringBuilder("[");
         final int SIZE = size();
         final int COMMA_SIZE = SIZE - 1;
