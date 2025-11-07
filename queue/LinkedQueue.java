@@ -45,7 +45,7 @@ public class LinkedQueue<T> {
             throw new IllegalStateException("Linked queue is empty");
         }
         T element = front.data;
-        if (front == rear) { // Has one element
+        if (front == rear) {
             rear = null;
         }
         front = front.next;
@@ -55,7 +55,7 @@ public class LinkedQueue<T> {
 
     public T front() {
         if (isEmpty()) {
-            throw new IllegalStateException("Linked queue is empty");
+            throw new java.util.NoSuchElementException("Linked queue is empty");
         }
         return front.data;
     }
