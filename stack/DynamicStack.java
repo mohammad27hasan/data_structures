@@ -7,12 +7,12 @@ public class DynamicStack<T> {
         this(10);
     }
     
-    public DynamicStack(int initialCapacity) {
-        if (initialCapacity < 1) {
+    public DynamicStack(int capacity) {
+        if (capacity < 1) {
             throw new IllegalArgumentException("Specified capacity is less than 1");
         }
-        array = new java.util.ArrayList<T>(initialCapacity);
         top = -1;
+        array = new java.util.ArrayList<T>(capacity);
     }
 
     public int size() {
@@ -46,6 +46,9 @@ public class DynamicStack<T> {
     }
 
     public String toString() {
+        if (isEmpty()) {
+            return "[]";
+        }
         StringBuilder sb = new StringBuilder("[");
         final int SIZE = size();
         final int COMMA_SIZE = SIZE - 1;
