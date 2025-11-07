@@ -6,13 +6,13 @@ public class ArrayQueue<T> {
     private int capacity;
     private java.util.ArrayList<T> array;
     private int size;
-    public ArrayQueue(int specifiedCapacity) {
-        if (specifiedCapacity < 1) {
+    public ArrayQueue(int capacity) {
+        if (capacity < 1) {
             throw new IllegalArgumentException("Specified capacity is less than 1");
         }
         front = -1;
         rear = -1;
-        capacity = specifiedCapacity;
+        this.capacity = capacity;
         array = new java.util.ArrayList<T>(java.util.Collections.nCopies(capacity, null));
         size = 0;
     }
@@ -61,7 +61,7 @@ public class ArrayQueue<T> {
 
     public T front() {
         if (isEmpty()) {
-            throw new IllegalStateException("Array queue is empty");
+            throw new java.util.NoSuchElementException("Array queue is empty");
         }
         return array.get(front);
     }
