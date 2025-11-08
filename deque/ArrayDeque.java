@@ -6,13 +6,13 @@ public class ArrayDeque<T> {
     private int capacity;
     private java.util.ArrayList<T> array;
     private int size;
-    public ArrayDeque(int specifiedCapacity) {
-        if (specifiedCapacity < 1) {
+    public ArrayDeque(int capacity) {
+        if (capacity < 1) {
             throw new IllegalArgumentException("Specified capacity is less than 1");
         }
         front = -1;
         rear = -1;
-        capacity = specifiedCapacity;
+        this.capacity = capacity;
         array = new java.util.ArrayList<T>(java.util.Collections.nCopies(capacity, null));
         size = 0;
     }
@@ -65,7 +65,7 @@ public class ArrayDeque<T> {
 
     public T popBack() {
         if (isEmpty()) {
-            throw new IllegalStateException("Array deque is empty");
+            throw new java.util.NoSuchElementException("Array deque is empty");
         }
         T element = array.get(rear);
         if (front == rear) {
@@ -82,7 +82,7 @@ public class ArrayDeque<T> {
 
     public T popFront() {
         if (isEmpty()) {
-            throw new IllegalStateException("Array deque is empty");
+            throw new java.util.NoSuchElementException("Array deque is empty");
         }
         T element = array.get(front);
         if (front == rear) {
@@ -97,14 +97,14 @@ public class ArrayDeque<T> {
 
     public T front() {
         if (isEmpty()) {
-            throw new IllegalStateException("Array deque is empty");
+            throw new java.util.NoSuchElementException("Array deque is empty");
         }
         return array.get(front);
     }
 
     public T back() {
         if (isEmpty()) {
-            throw new IllegalStateException("Array deque is empty");
+            throw new java.util.NoSuchElementException("Array deque is empty");
         }
         return array.get(rear);
     }
@@ -133,4 +133,4 @@ public class ArrayDeque<T> {
         sb.append(array.get(i) + "]");
         return sb.toString();
     }
-} 
+}
