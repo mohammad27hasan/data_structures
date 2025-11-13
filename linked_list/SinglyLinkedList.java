@@ -1,7 +1,7 @@
 /*
-* class: SinglyLinkedList
-* version: 1.0.4
-* author: Mohammad Hasan
+* Data_structrue: SinglyLinkedList
+* Version: 1.0.5
+* Author: Mohammad Hasan
 */
 
 package ds.linked;
@@ -57,11 +57,11 @@ public class SinglyLinkedList<T> {
     }
 
     public void insertAt(int index, T item) {
-        if ((index < 0) || (index > size)) {
-            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
-        }
         if (item == null) {
             throw new NullPointerException("Specified item is null");
+        }
+        if ((index < 0) || (index > size)) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
         Node newNode = new Node(item);
         if (index == 0) {
@@ -183,7 +183,10 @@ public class SinglyLinkedList<T> {
         return node.data;
     }
 
-    public void replaceAt(int index, T item) {
+    public void setAt(int index, T item) {
+        if (item == null) {
+            throw new NullPointerException("Specified item is null");
+        }
         if ((index < 0) || (index >= size)) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
