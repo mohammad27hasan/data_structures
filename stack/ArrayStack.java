@@ -1,9 +1,15 @@
+/*
+* Abstract data type: Array stack
+* Version: 1.0.7
+* Author: Mohammad Hasan
+*/
 package ds.stack;
 
 public class ArrayStack<T> {
     private int top;
     private java.util.ArrayList<T> array;
     private int capacity;
+
     public ArrayStack(int capacity) {
         if (capacity < 1) {
             throw new IllegalArgumentException("Specified capacity is less than 1");
@@ -50,16 +56,20 @@ public class ArrayStack<T> {
         return array.get(top);
     }
 
+    public void clear() {
+        while (!isEmpty()) {
+            pop();
+        }
+    }
+
     public String toString() {
         if (isEmpty()) {
             return "[]";
         }
         StringBuilder sb = new StringBuilder("[");
-        final int SIZE = size();
-        final int COMMA_SIZE = SIZE - 1;
-        for (int i = 0; i < SIZE; i++) {
+        for (int i = 0; i <= top; i++) {
             sb.append(array.get(i));
-            if (i < COMMA_SIZE) {
+            if (i != top) {
                 sb.append(", ");
             }
         }
