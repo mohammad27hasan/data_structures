@@ -1,3 +1,8 @@
+/*
+* Abstract data type: Linked stack
+* Version: 1.0.4
+* Author: Mohammad Hasan
+*/
 package ds.stack;
 
 public class LinkedStack<T> {
@@ -5,15 +10,18 @@ public class LinkedStack<T> {
         Node up;
         T data;
         Node down;
+
         Node(T val) {
             up = null;
             data = val;
             down = null;
         }
     }
+
     private Node top;
     private Node bottom;
     private int size;
+
     public LinkedStack() {
         top = null;
         bottom = null;
@@ -64,20 +72,23 @@ public class LinkedStack<T> {
         return top.data;
     }
 
+    public void clear() {
+        while (!isEmpty()) {
+            pop();
+        }
+    }
+
     public String toString() {
         if (isEmpty()) {
             return "[]";
         }
         StringBuilder sb = new StringBuilder("[");
         Node node = bottom;
-        while (node != null) {
-            sb.append(node.data);
-            if (node.up != null) {
-                sb.append(", ");
-            }
+        while (node != top) {
+            sb.append(node.data + ", ");
             node = node.up;
         }
-        sb.append("]");
+        sb.append(node.data + "]");
         return sb.toString();
     }
 }
