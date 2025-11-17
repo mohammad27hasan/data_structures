@@ -1,3 +1,8 @@
+/*
+* Abstract data type: Dynamic deque
+* Version: 1.0.1
+* Author: Mohammad Hasan
+*/
 package ds.deque;
 
 public class DynamicDeque<T> {
@@ -6,6 +11,7 @@ public class DynamicDeque<T> {
     private int capacity;
     private java.util.ArrayList<T> array;
     private int size;
+
     public DynamicDeque() {
         this(10);
     }
@@ -142,14 +148,9 @@ public class DynamicDeque<T> {
             return "[]";
         }
         StringBuilder sb = new StringBuilder("[");
-        int commaSize = size - 1;
         int i = front;
         while (i != rear) {
-            sb.append(array.get(i));
-            if (commaSize > 0) {
-                sb.append(", ");
-                commaSize--;
-            }
+            sb.append(array.get(i + ", "));
             i = (i + 1) % capacity;
         }
         sb.append(array.get(i) + "]");
