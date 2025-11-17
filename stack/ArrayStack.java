@@ -1,6 +1,6 @@
 /*
 * Abstract data type: Array stack
-* Version: 1.0.7
+* Version: 1.0.8
 * Author: Mohammad Hasan
 */
 package ds.stack;
@@ -67,13 +67,12 @@ public class ArrayStack<T> {
             return "[]";
         }
         StringBuilder sb = new StringBuilder("[");
-        for (int i = 0; i <= top; i++) {
-            sb.append(array.get(i));
-            if (i != top) {
-                sb.append(", ");
-            }
+        int i = 0;
+        while (i < top) {
+            sb.append(array.get(i) + ", ");
+            i++;
         }
-        sb.append("]");
+        sb.append(array.get(i) + "]");
         return sb.toString();
     }
 }
