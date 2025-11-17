@@ -1,8 +1,14 @@
+/*
+* Abstract data type: Dynamic stack
+* Version: 1.0.4
+* Author: Mohammad Hasan
+*/
 package ds.stack;
 
 public class DynamicStack<T> {
     private int top;
     private java.util.ArrayList<T> array;
+
     public DynamicStack() {
         this(10);
     }
@@ -45,20 +51,22 @@ public class DynamicStack<T> {
         return array.get(top);
     }
 
+    public void clear() {
+        while (!isEmpty()) {
+            pop();
+        }
+    }
+
     public String toString() {
         if (isEmpty()) {
             return "[]";
         }
         StringBuilder sb = new StringBuilder("[");
-        final int SIZE = size();
-        final int COMMA_SIZE = SIZE - 1;
-        for (int i = 0; i < SIZE; i++) {
-            sb.append(array.get(i));
-            if (i < COMMA_SIZE) {
-                sb.append(", ");
-            }
+        int i = 0;
+        while (i < top) {
+            sb.append(array.get(i) + ", ");
         }
-        sb.append("]");
+        sb.append(array.get(i) + "]");
         return sb.toString();
     }
 }
