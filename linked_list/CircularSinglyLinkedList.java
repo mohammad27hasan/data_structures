@@ -1,6 +1,6 @@
 /*
 * Abstract data type: Circular singly linked list
-* Version: 1.0.1
+* Version: 1.0.2
 * Author: Mohammad Hasan
 */
 package ds.linked;
@@ -207,6 +207,23 @@ public class CircularSinglyLinkedList<T> {
             }
             size--;
         }
+    }
+
+    public void reverse() {
+        if (isEmpty()) {
+            return;
+        }
+        Node forward = null;
+        Node current = tail.next;
+        Node backward = tail;
+        while (current != tail) {
+            forward = current.next;
+            current.next = backward;
+            backward = current;
+            current = forward;
+        }
+        tail = current.next;
+        current.next = backward;
     }
 
     public void clear() {
