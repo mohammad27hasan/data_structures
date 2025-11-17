@@ -1,17 +1,25 @@
+/*
+* Abstract data type: Linked queue
+* Version: 1.0.3
+* Author: Mohammad Hasan
+*/
 package ds.queue;
 
 public class LinkedQueue<T> {
     private class Node {
         T data;
         Node next;
+
         Node(T val) {
             data = val;
             next = null;
         }
     }
+
     private Node front;
     private Node rear;
     private int size;
+
     public LinkedQueue() {
         front = null;
         rear = null;
@@ -60,20 +68,23 @@ public class LinkedQueue<T> {
         return front.data;
     }
 
+    public void clear() {
+        while (!isEmpty()) {
+            dequeue();
+        }
+    }
+
     public String toString() {
         if (isEmpty()) {
             return "[]";
         }
         StringBuilder sb = new StringBuilder("[");
         Node node = front;
-        while (node != null) {
-            sb.append(node.data);
-            if (node.next != null) {
-                sb.append(", ");
-            }
+        while (node != rear) {
+            sb.append(node.data + ", ");
             node = node.next;
         }
-        sb.append("]");
+        sb.append(node.data + "]");
         return sb.toString();
     }
 }
