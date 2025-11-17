@@ -1,22 +1,24 @@
 /*
-* Data_structrue: SinglyLinkedList
-* Version: 1.0.5
+* Abstract data type: Singly linked list
+* Version: 1.0.6
 * Author: Mohammad Hasan
 */
-
 package ds.linked;
 
 public class SinglyLinkedList<T> {
     private class Node {
         T data;
         Node next;
+
         Node(T val) {
             data = val;
             next = null;
         }
     }
+
     private Node head;
     private int size;
+
     public SinglyLinkedList() {
         head = null;
         size = 0;
@@ -39,11 +41,7 @@ public class SinglyLinkedList<T> {
     }
 
     public boolean contains(Object item) {
-        Node node = search(item);
-        if (node == null) {
-            return false;
-        }
-        return true;
+        return ((search(item) == null) ? false : true);
     }
 
     public void insertBeginning(T item) {
@@ -227,14 +225,11 @@ public class SinglyLinkedList<T> {
         }
         StringBuilder sb = new StringBuilder("[");
         Node node = head;
-        while (node != null) {
-            sb.append(node.data);
-            if (node.next != null) {
-                sb.append(", ");
-            }
+        while (node.next != null) {
+            sb.append(node.data + ", ");
             node = node.next;
         }
-        sb.append("]");
+        sb.append(node.data + "]");
         return sb.toString();
     }
 }
