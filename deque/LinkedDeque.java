@@ -1,3 +1,8 @@
+/*
+* Abstract data type: Linked deque
+* Version: 1.0.2
+* Author: Mohammad Hasan
+*/
 package ds.deque;
 
 public class LinkedDeque<T> {
@@ -5,15 +10,18 @@ public class LinkedDeque<T> {
         Node prev;
         T data;
         Node next;
+
         Node(T val) {
             prev = null;
             data = val;
             next = null;
         }
     }
+
     private Node front;
     private Node rear;
     private int size;
+    
     public LinkedDeque() {
         front = null;
         rear = null;
@@ -94,20 +102,23 @@ public class LinkedDeque<T> {
         return front.data;
     }
 
+    public void clear() {
+        while (!isEmpty()) {
+            popBack();
+        }
+    }
+
     public String toString() {
         if (isEmpty()) {
             return "[]";
         }
         StringBuilder sb = new StringBuilder("[");
         Node node = front;
-        while (node != null) {
-            sb.append(node.data);
-            if (node.next != null) {
-                sb.append(", ");
-            }
+        while (node != rear) {
+            sb.append(node.data + ", ");
             node = node.next;
         }
-        sb.append("]");
+        sb.append(node.data + "]");
         return sb.toString();
     }
 }
