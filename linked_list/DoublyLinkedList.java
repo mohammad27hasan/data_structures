@@ -1,9 +1,8 @@
 /*
-* Data_structrue: DoublyLinkedList
-* Version: 1.0.2
+* Abstract data type: Doubly linked list
+* Version: 1.0.3
 * Author: Mohammad Hasan
 */
-
 package ds.linked;
 
 public class DoublyLinkedList<T> {
@@ -11,15 +10,18 @@ public class DoublyLinkedList<T> {
         Node prev;
         T data;
         Node next;
+
         Node(T val) {
             prev = null;
             data = val;
             next = null;
         }
     }
+
     private Node head;
     private Node tail;
     private int size;
+    
     public DoublyLinkedList() {
         head = null;
         tail = null;
@@ -43,11 +45,7 @@ public class DoublyLinkedList<T> {
     }
 
     public boolean contains(Object item) {
-        Node node = search(item);
-        if (node == null) {
-            return false;
-        }
-        return true;
+        return ((search(item) == null) ? false : true);
     }
 
     public void insertBeginning(T item) {
@@ -238,14 +236,11 @@ public class DoublyLinkedList<T> {
         }
         StringBuilder sb = new StringBuilder("[");
         Node node = head;
-        while (node != null) {
-            sb.append(node.data);
-            if (node.next != null) {
-                sb.append(", ");
-            }
+        while (node != tail) {
+            sb.append(node.data + ", ");
             node = node.next;
         }
-        sb.append("]");
+        sb.append(node.data + "]");
         return sb.toString();
     }
 }
