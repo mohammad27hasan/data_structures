@@ -1,3 +1,8 @@
+/*
+* Abstract data type: Dynamic queue
+* Version: 1.0.2
+* Author: Mohammad Hasan
+*/
 package ds.queue;
 
 public class DynamicQueue<T> {
@@ -6,6 +11,7 @@ public class DynamicQueue<T> {
     private int capacity;
     private java.util.ArrayList<T> array;
     private int size;
+
     public DynamicQueue() {
         this(10);
     }
@@ -44,6 +50,7 @@ public class DynamicQueue<T> {
             i = (i + 1) % cap;
             j++;
         }
+        temp.set(j, array.get(i));
         front = 0;
         rear = j;
         size = j + 1;
@@ -87,19 +94,20 @@ public class DynamicQueue<T> {
         return array.get(front);
     }
 
+    public void clear() {
+        while (!isEmpty()) {
+            dequeue();
+        }
+    }
+
     public String toString() {
         if (isEmpty()) {
             return "[]";
         }
         StringBuilder sb = new StringBuilder("[");
-        int commaSize = size - 1;
         int i = front;
         while (i != rear) {
-            sb.append(array.get(i));
-            if (commaSize > 0) {
-                sb.append(", ");
-                commaSize--;
-            }
+            sb.append(array.get(i) + ", ");
             i = (i + 1) % capacity;
         }
         sb.append(array.get(i) + "]");
