@@ -1,3 +1,8 @@
+/*
+* Abstract data type: Array queue
+* Version: 1.0.3
+* Author: Mohammad Hasan
+*/
 package ds.queue;
 
 public class ArrayQueue<T> {
@@ -6,6 +11,7 @@ public class ArrayQueue<T> {
     private int capacity;
     private java.util.ArrayList<T> array;
     private int size;
+
     public ArrayQueue(int capacity) {
         if (capacity < 1) {
             throw new IllegalArgumentException("Specified capacity is less than 1");
@@ -66,19 +72,20 @@ public class ArrayQueue<T> {
         return array.get(front);
     }
 
+    public void clear() {
+        while (!isEmpty()) {
+            dequeue();
+        }
+    }
+
     public String toString() {
         if (isEmpty()) {
             return "[]";
         }
         StringBuilder sb = new StringBuilder("[");
-        int commaSize = size - 1;
         int i = front;
         while (i != rear) {
-            sb.append(array.get(i));
-            if (commaSize > 0) {
-                sb.append(", ");
-                commaSize--;
-            }
+            sb.append(array.get(i) + ", ");
             i = (i + 1) % capacity;
         }
         sb.append(array.get(i) + "]");
