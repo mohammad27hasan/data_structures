@@ -1,6 +1,6 @@
 /*
 * Abstract data type: Singly linked list
-* Version: 1.0.6
+* Version: 1.0.7
 * Author: Mohammad Hasan
 */
 package ds.linked;
@@ -33,6 +33,9 @@ public class SinglyLinkedList<T> {
     }
 
     private Node search(Object item) {
+        if (item == null) {
+            return null;
+        }
         Node node = head;
         while ((node != null) && !node.data.equals(item)) {
             node = node.next;
