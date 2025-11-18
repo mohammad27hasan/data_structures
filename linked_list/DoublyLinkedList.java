@@ -1,6 +1,6 @@
 /*
 * Abstract data type: Doubly linked list
-* Version: 1.0.3
+* Version: 1.0.4
 * Author: Mohammad Hasan
 */
 package ds.linked;
@@ -37,6 +37,9 @@ public class DoublyLinkedList<T> {
     }
 
     private Node search(Object item) {
+        if (item == null) {
+            return null;
+        }
         Node node = head;
         while ((node != null) && !node.data.equals(item)) {
             node = node.next;
@@ -54,13 +57,12 @@ public class DoublyLinkedList<T> {
         }
         Node newNode = new Node(item);
         if (isEmpty()) {
-            head = newNode;
             tail = newNode;
         } else {
             newNode.next = head;
             head.prev = newNode;
-            head = newNode;
         }
+        head = newNode;
         size++;
     }
 
@@ -71,12 +73,11 @@ public class DoublyLinkedList<T> {
         Node newNode = new Node(item);
         if (isEmpty()) {
             head = newNode;
-            tail = newNode;
         } else {
             newNode.prev = tail;
             tail.next = newNode;
-            tail = newNode;
         }
+        tail = newNode;
         size++;
     }
 
