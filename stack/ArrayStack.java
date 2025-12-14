@@ -1,22 +1,23 @@
 /*
+* Data structure: Stack
 * Abstract data type: Array stack
-* Version: 1.0.8
+* Version: 1.0.9
 * Author: Mohammad Hasan
 */
 package ds.stack;
 
 public class ArrayStack<T> {
-    private int top;
     private java.util.ArrayList<T> array;
     private int capacity;
+    private int top;
 
     public ArrayStack(int capacity) {
         if (capacity < 1) {
-            throw new IllegalArgumentException("Specified capacity is less than 1");
+            throw new IllegalArgumentException("Illegal Capacity: " + capacity);
         }
-        top = -1;
         array = new java.util.ArrayList<T>(capacity);
         this.capacity = capacity;
+        top = -1;
     }
 
     public int size() {
@@ -31,15 +32,15 @@ public class ArrayStack<T> {
         return (top == (capacity - 1));
     }
 
-    public void push(T item) {
-        if (item == null) {
-            throw new NullPointerException("Specified item is null");
+    public void push(T element) {
+        if (element == null) {
+            throw new NullPointerException("Element: " + element);
         }
         if (isFull()) {
-            throw new IllegalStateException("Array stack is full");
+            throw new IllegalStateException("Size: " + (size() + 1) + ", Capacity: " + capacity);
         }
         top++;
-        array.add(item);
+        array.add(element);
     }
 
     public T pop() {
