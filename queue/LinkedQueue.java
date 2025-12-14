@@ -1,6 +1,7 @@
 /*
+* Data structure: Queue
 * Abstract data type: Linked queue
-* Version: 1.0.3
+* Version: 1.0.4
 * Author: Mohammad Hasan
 */
 package ds.queue;
@@ -16,9 +17,9 @@ public class LinkedQueue<T> {
         }
     }
 
+    private int size;
     private Node front;
     private Node rear;
-    private int size;
 
     public LinkedQueue() {
         front = null;
@@ -34,11 +35,11 @@ public class LinkedQueue<T> {
         return (front == null);
     }
 
-    public void enqueue(T item) {
-        if (item == null) {
-            throw new NullPointerException("Specified item is null");
+    public void enqueue(T element) {
+        if (element == null) {
+            throw new NullPointerException("Element: " + element);
         }
-        Node newNode = new Node(item);
+        Node newNode = new Node(element);
         if (isEmpty()) {
             front = newNode;
         } else {
@@ -50,7 +51,7 @@ public class LinkedQueue<T> {
 
     public T dequeue() {
         if (isEmpty()) {
-            throw new IllegalStateException("Linked queue is empty");
+            throw new IllegalStateException("Size: " + size);
         }
         T element = front.data;
         if (front == rear) {
@@ -63,7 +64,7 @@ public class LinkedQueue<T> {
 
     public T front() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Linked queue is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
         return front.data;
     }
