@@ -1,30 +1,31 @@
 /*
+* Data structure: Queue
 * Abstract data type: Dynamic queue
-* Version: 1.0.2
+* Version: 1.0.3
 * Author: Mohammad Hasan
 */
 package ds.queue;
 
 public class DynamicQueue<T> {
+    private java.util.ArrayList<T> vector;
+    private int capacity;
+    private int size;
     private int front;
     private int rear;
-    private int capacity;
-    private java.util.ArrayList<T> array;
-    private int size;
-
-    public DynamicQueue() {
-        this(10);
-    }
 
     public DynamicQueue(int initialCapacity) {
         if (initialCapacity < 1) {
-            throw new IllegalArgumentException("Specified capacity is less than 1");
+            throw new IllegalArgumentException("Illegal Capacity: " + initialCapacity);
         }
+        vector = new java.util.ArrayList<T>(java.util.Collections.nCopies(initialCapacity, null));
+        capacity = initialCapacity;
+        size = 0;
         front = -1;
         rear = -1;
-        capacity = initialCapacity;
-        array = new java.util.ArrayList<T>(java.util.Collections.nCopies(capacity, null));
-        size = 0;
+    }
+
+    public DynamicQueue() {
+        this(10);
     }
 
     public int size() {
@@ -40,26 +41,26 @@ public class DynamicQueue<T> {
     }
 
     private void grow() {
-        int cap = capacity;
+        final int OLD_CAPACITY = capacity;
         capacity = capacity * 3 / 2 + 1;
-        var temp = new java.util.ArrayList<T>(java.util.Collections.nCopies(capacity, null));
+        var newVector = new java.util.ArrayList<T>(java.util.Collections.nCopies(capacity, null));
         int i = front;
         int j = 0;
         while (i != rear) {
-            temp.set(j, array.get(i));
-            i = (i + 1) % cap;
+            newVector.set(j, vector.get(i));
+            i = (i + 1) % OLD_CAPACITY;
             j++;
         }
-        temp.set(j, array.get(i));
+        newVector.set(j, vector.get(i));
         front = 0;
         rear = j;
         size = j + 1;
-        array = temp;
+        vector = newVector;
     }
 
-    public void enqueue(T item) {
-        if (item == null) {
-            throw new NullPointerException("Specified item is null");
+    public void enqueue(T element) {
+        if (element == null) {
+            throw new NullPointerException("Element: " + element);
         } 
         if (isFull()) {
             grow();
@@ -68,15 +69,15 @@ public class DynamicQueue<T> {
             front = 0;
         }
         rear = (rear + 1) % capacity;
-        array.set(rear, item);
+        vector.set(rear, element);
         size++;
     }
 
     public T dequeue() {
         if (isEmpty()) {
-            throw new IllegalStateException("Dynamic queue is empty");
+            throw new IllegalStateException("Size: " + size);
         }
-        T element = array.get(front);
+        T element = vector.get(front);
         if (front == rear) {
             front = -1;
             rear = -1;
@@ -89,9 +90,9 @@ public class DynamicQueue<T> {
 
     public T front() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Dynamic queue is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
-        return array.get(front);
+        return vector.get(front);
     }
 
     public void clear() {
@@ -107,10 +108,10 @@ public class DynamicQueue<T> {
         StringBuilder sb = new StringBuilder("[");
         int i = front;
         while (i != rear) {
-            sb.append(array.get(i) + ", ");
+            sb.append(vector.get(i) + ", ");
             i = (i + 1) % capacity;
         }
-        sb.append(array.get(i) + "]");
+        sb.append(vector.get(i) + "]");
         return sb.toString();
     }
 }
