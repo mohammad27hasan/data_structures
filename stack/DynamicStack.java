@@ -1,20 +1,20 @@
 /*
 * Data structure: Stack
 * Abstract data type: Dynamic stack
-* Version: 1.0.5
+* Version: 1.0.6
 * Author: Mohammad Hasan
 */
 package ds.stack;
 
 public class DynamicStack<T> {
-    private java.util.ArrayList<T> array;
+    private java.util.ArrayList<T> vector;
     private int top;
     
     public DynamicStack(int capacity) {
         if (capacity < 1) {
             throw new IllegalArgumentException("Illegal Capacity: " + capacity);
         }
-        array = new java.util.ArrayList<T>(capacity);
+        vector = new java.util.ArrayList<T>(capacity);
         top = -1;
     }
 
@@ -35,21 +35,21 @@ public class DynamicStack<T> {
             throw new NullPointerException("Element: " + element);
         }
         top++;
-        array.add(element);
+        vector.add(element);
     }
 
     public T pop() {
         if (isEmpty()) {
             throw new java.util.EmptyStackException();
         }
-        return array.remove(top--);
+        return vector.remove(top--);
     }
 
     public T peek() {
         if (isEmpty()) {
             throw new java.util.EmptyStackException();
         }
-        return array.get(top);
+        return vector.get(top);
     }
 
     public void clear() {
@@ -65,9 +65,9 @@ public class DynamicStack<T> {
         StringBuilder sb = new StringBuilder("[");
         int i = 0;
         while (i < top) {
-            sb.append(array.get(i) + ", ");
+            sb.append(vector.get(i) + ", ");
         }
-        sb.append(array.get(i) + "]");
+        sb.append(vector.get(i) + "]");
         return sb.toString();
     }
 }
