@@ -1,6 +1,7 @@
 /*
+* Data structure: Stack
 * Abstract data type: Linked stack
-* Version: 1.0.4
+* Version: 1.0.5
 * Author: Mohammad Hasan
 */
 package ds.stack;
@@ -11,9 +12,9 @@ public class LinkedStack<T> {
         T data;
         Node down;
 
-        Node(T val) {
+        Node(T value) {
             up = null;
-            data = val;
+            data = value;
             down = null;
         }
     }
@@ -36,11 +37,11 @@ public class LinkedStack<T> {
         return (top == null);
     }
 
-    public void push(T item) {
-        if (item == null) {
-            throw new NullPointerException("Specified item is null");
+    public void push(T element) {
+        if (element == null) {
+            throw new NullPointerException("Element: " + element);
         }
-        Node newNode = new Node(item);
+        Node newNode = new Node(element);
         if (isEmpty()) {
             top = newNode;
             bottom = newNode;
