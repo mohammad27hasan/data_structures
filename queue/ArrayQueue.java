@@ -1,7 +1,7 @@
 /*
 * Data structure: Queue
 * Abstract data type: Array queue
-* Version: 1.0.4
+* Version: 1.0.5
 * Author: Mohammad Hasan
 */
 package ds.queue;
@@ -68,7 +68,7 @@ public class ArrayQueue<T> {
 
     public T front() {
         if (isEmpty()) {
-            throw new IllegalStateException("Size: " + size);
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
         return array.get(front);
     }
