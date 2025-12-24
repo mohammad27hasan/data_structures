@@ -1,26 +1,27 @@
 /*
+* Data structrue: Deque
 * Abstract data type: Array deque
-* Version: 1.0.3
+* Version: 1.0.4
 * Author: Mohammad Hasan
 */
 package ds.deque;
 
 public class ArrayDeque<T> {
+    private java.util.ArrayList<T> array;
+    private int capacity;
+    private int size;
     private int front;
     private int rear;
-    private int capacity;
-    private java.util.ArrayList<T> array;
-    private int size;
 
     public ArrayDeque(int capacity) {
         if (capacity < 1) {
-            throw new IllegalArgumentException("Specified capacity is less than 1");
+            throw new IllegalArgumentException("Illegal Capacity: " + capacity);
         }
+        array = new java.util.ArrayList<T>(java.util.Collections.nCopies(capacity, null));
+        this.capacity = capacity;
+        size = 0;
         front = -1;
         rear = -1;
-        this.capacity = capacity;
-        array = new java.util.ArrayList<T>(java.util.Collections.nCopies(capacity, null));
-        size = 0;
     }
 
     public int size() {
@@ -35,27 +36,27 @@ public class ArrayDeque<T> {
         return (front == ((rear + 1) % capacity));
     }
 
-    public void pushBack(T item) {
-        if (item == null) {
-            throw new NullPointerException("Specified item is null");
+    public void pushBack(T element) {
+        if (element == null) {
+            throw new NullPointerException("Element: " + element);
         }
         if (isFull()) {
-            throw new IllegalStateException("Array deque is full");
+            throw new IllegalStateException("Size: " + (size + 1) + ", Capacity: " + capacity);
         }
         if (isEmpty()) {
             front = 0;
         }
         rear = (rear + 1) % capacity;
-        array.set(rear, item);
+        array.set(rear, element);
         size++;
     }
 
-    public void pushFront(T item) {
-        if (item == null) {
-            throw new NullPointerException("Specified item is null");
+    public void pushFront(T element) {
+        if (element == null) {
+            throw new NullPointerException("Element: " + element);
         }
         if (isFull()) {
-            throw new IllegalStateException("Array deque is full");
+            throw new IllegalStateException("Size: " + (size + 1) + ", Capacity: " + capacity);
         }
         if (isEmpty()) {
             front = 0;
@@ -65,13 +66,13 @@ public class ArrayDeque<T> {
         } else {
             front--;
         }
-        array.set(front, item);
+        array.set(front, element);
         size++;
     }
 
     public T popBack() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Array deque is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
         T element = array.get(rear);
         if (front == rear) {
@@ -88,7 +89,7 @@ public class ArrayDeque<T> {
 
     public T popFront() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Array deque is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
         T element = array.get(front);
         if (front == rear) {
@@ -103,14 +104,14 @@ public class ArrayDeque<T> {
 
     public T front() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Array deque is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
         return array.get(front);
     }
 
     public T back() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Array deque is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
         return array.get(rear);
     }
