@@ -1,4 +1,5 @@
 /*
+* Data structure: Deque
 * Abstract data type: Dynamic deque
 * Version: 1.0.2
 * Author: Mohammad Hasan
