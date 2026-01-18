@@ -1,30 +1,30 @@
 /*
 * Abstract data type: Dynamic deque
-* Version: 1.0.1
+* Version: 1.0.2
 * Author: Mohammad Hasan
 */
 package ds.deque;
 
 public class DynamicDeque<T> {
+    private java.util.ArrayList<T> vector;
+    private int capacity;
+    private int size;
     private int front;
     private int rear;
-    private int capacity;
-    private java.util.ArrayList<T> array;
-    private int size;
-
-    public DynamicDeque() {
-        this(10);
-    }
 
     public DynamicDeque(int initialCapacity) {
         if (initialCapacity < 1) {
-            throw new IllegalArgumentException("Specified capacity is less than 1");
+            throw new IllegalArgumentException("Illegal Capacity: " + initialCapacity);
         }
+        vector = new java.util.ArrayList<T>(java.util.Collections.nCopies(initialCapacity, null));
+        capacity = initialCapacity;
+        size = 0;
         front = -1;
         rear = -1;
-        capacity = initialCapacity;
-        array = new java.util.ArrayList<T>(java.util.Collections.nCopies(capacity, null));
-        size = 0;
+    }
+
+    public DynamicDeque() {
+        this(10);
     }
 
     public int size() {
@@ -40,41 +40,41 @@ public class DynamicDeque<T> {
     }
 
     private void grow() {
-        int cap = capacity;
-        capacity = capacity * 3 / 2 + 1;
+        final int OLD_CAPACITY = capacity;
+        capacity = OLD_CAPACITY * 3 / 2 + 1;
         var temp = new java.util.ArrayList<T>(java.util.Collections.nCopies(capacity, null));
         int i = front;
         int j = 0;
         while (i != rear) {
-            temp.set(j, array.get(i));
-            i = (i + 1) % cap;
+            temp.set(j, vector.get(i));
+            i = (i + 1) % OLD_CAPACITY;
             j++;
         }
-        temp.set(j, array.get(i));
+        temp.set(j, vector.get(i));
         front = 0;
         rear = j;
         size = j + 1;
-        array = temp;
+        vector = temp;
     }
 
-    public void pushBack(T item) {
-        if (item == null) {
-            throw new NullPointerException("Specified item is null");
+    public void pushBack(T element) {
+        if (element == null) {
+            throw new NullPointerException("Element: " + element);
         }
         if (isFull()) {
             grow();
-        } 
+        }
         if (isEmpty()) {
             front = 0;
         }
         rear = (rear + 1) % capacity;
-        array.set(rear, item);
+        vector.set(rear, element);
         size++;
     }
 
-    public void pushFront(T item) {
-        if (item == null) {
-            throw new NullPointerException("Specified item is null");
+    public void pushFront(T element) {
+        if (element == null) {
+            throw new NullPointerException("Element: " + element);
         }
         if (isFull()) {
             grow();
@@ -87,15 +87,15 @@ public class DynamicDeque<T> {
         } else {
             front--;
         }
-        array.set(front, item);
+        vector.set(front, element);
         size++;
     }
 
     public T popBack() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Dynamic deque is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
-        T element = array.get(rear);
+        T element = vector.get(rear);
         if (front == rear) {
             front = -1;
             rear = -1;
@@ -110,9 +110,9 @@ public class DynamicDeque<T> {
 
     public T popFront() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Dynamic deque is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
-        T element = array.get(front);
+        T element = vector.get(front);
         if (front == rear) {
             front = -1;
             rear = -1;
@@ -125,16 +125,16 @@ public class DynamicDeque<T> {
 
     public T front() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Dynamic deque is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
-        return array.get(front);
+        return vector.get(front);
     }
 
     public T back() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Dynamic deque is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
-        return array.get(rear);
+        return vector.get(rear);
     }
 
     public void clear() {
@@ -150,10 +150,10 @@ public class DynamicDeque<T> {
         StringBuilder sb = new StringBuilder("[");
         int i = front;
         while (i != rear) {
-            sb.append(array.get(i + ", "));
+            sb.append(vector.get(i + ", "));
             i = (i + 1) % capacity;
         }
-        sb.append(array.get(i) + "]");
+        sb.append(vector.get(i) + "]");
         return sb.toString();
     }
 }
