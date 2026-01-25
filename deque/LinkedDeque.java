@@ -1,6 +1,7 @@
 /*
+* Data structure: Deque
 * Abstract data type: Linked deque
-* Version: 1.0.2
+* Version: 1.0.3
 * Author: Mohammad Hasan
 */
 package ds.deque;
@@ -18,14 +19,14 @@ public class LinkedDeque<T> {
         }
     }
 
+    private int size;
     private Node front;
     private Node rear;
-    private int size;
     
     public LinkedDeque() {
+        size = 0;
         front = null;
         rear = null;
-        size = 0;
     }
 
     public int size() {
@@ -36,11 +37,11 @@ public class LinkedDeque<T> {
         return (front == null);
     }
 
-    public void pushBack(T item) {
-        if (item == null) {
-            throw new NullPointerException("Specified item is null");
+    public void pushBack(T element) {
+        if (element == null) {
+            throw new NullPointerException("Element: " + element);
         }
-        Node newNode = new Node(item);
+        Node newNode = new Node(element);
         if (isEmpty()) {
             front = newNode;
         } else {
@@ -51,11 +52,11 @@ public class LinkedDeque<T> {
         size++;
     }
 
-    public void pushFront(T item) {
-        if (item == null) {
-            throw new NullPointerException("Specified item is null");
+    public void pushFront(T element) {
+        if (element == null) {
+            throw new NullPointerException("Element: " + element);
         }
-        Node newNode = new Node(item);
+        Node newNode = new Node(element);
         if (isEmpty()) {
             rear = newNode;
         } else {
@@ -68,7 +69,7 @@ public class LinkedDeque<T> {
 
     public T popBack() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Linked deque is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
         T element = rear.data;
         rear = rear.prev;
@@ -79,7 +80,7 @@ public class LinkedDeque<T> {
 
     public T popFront() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Linked deque is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
         T element = front.data;
         front = front.next;
@@ -90,14 +91,14 @@ public class LinkedDeque<T> {
 
     public T back() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Linked deque is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
         return rear.data;
     }
 
     public T front() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Linked deque is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
         return front.data;
     }
