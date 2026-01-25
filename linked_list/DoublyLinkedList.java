@@ -1,6 +1,7 @@
 /*
+* Data structure: Linked list
 * Abstract data type: Doubly linked list
-* Version: 1.0.4
+* Version: 1.0.5
 * Author: Mohammad Hasan
 */
 package ds.linked;
@@ -18,14 +19,14 @@ public class DoublyLinkedList<T> {
         }
     }
 
+    private int size;
     private Node head;
     private Node tail;
-    private int size;
     
     public DoublyLinkedList() {
+        size = 0;
         head = null;
         tail = null;
-        size = 0;
     }
 
     public int size() {
@@ -36,26 +37,26 @@ public class DoublyLinkedList<T> {
         return ((head == null) || (tail == null));
     }
 
-    private Node search(Object item) {
-        if (item == null) {
-            return null;
-        }
+    private Node search(T key) {
         Node node = head;
-        while ((node != null) && !node.data.equals(item)) {
+        while ((node != null) && !key.equals(node.data)) {
             node = node.next;
         }
         return node;
     }
 
-    public boolean contains(Object item) {
-        return ((search(item) == null) ? false : true);
+    public boolean contains(T element) {
+        if (element == null) {
+            return false;
+        }
+        return (search(element) != null);
     }
 
-    public void insertBeginning(T item) {
-        if (item == null) {
-            throw new NullPointerException("Specified item is null");
+    public void insertBeginning(T element) {
+        if (element == null) {
+            throw new NullPointerException("Element: " + element);
         }
-        Node newNode = new Node(item);
+        Node newNode = new Node(element);
         if (isEmpty()) {
             tail = newNode;
         } else {
@@ -66,11 +67,11 @@ public class DoublyLinkedList<T> {
         size++;
     }
 
-    public void insertEnd(T item) {
-        if (item == null) {
-            throw new NullPointerException("Specified item is null");
+    public void insertEnd(T element) {
+        if (element == null) {
+            throw new NullPointerException("Element: " + element);
         }
-        Node newNode = new Node(item);
+        Node newNode = new Node(element);
         if (isEmpty()) {
             head = newNode;
         } else {
@@ -81,19 +82,19 @@ public class DoublyLinkedList<T> {
         size++;
     }
 
-    public void insertAt(int index, T item) {
-        if (item == null) {
-            throw new NullPointerException("Specified item is null");
+    public void insertAt(int index, T element) {
+        if (element == null) {
+            throw new NullPointerException("Element: " + element);
         }
         if ((index < 0) || (index > size)) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
         if (index == 0) {
-            insertBeginning(item);
+            insertBeginning(element);
         } else if (index == size) {
-            insertEnd(item);
+            insertEnd(element);
         } else {
-            Node newNode = new Node(item);
+            Node newNode = new Node(element);
             Node node = head.next;
             int idx = 1;
             while (node != null) {
@@ -111,13 +112,13 @@ public class DoublyLinkedList<T> {
         }
     }
 
-    public void insert(T item) {
-        insertEnd(item);
+    public void insert(T element) {
+        insertEnd(element);
     }
 
     public void removeBeginning() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Doubly linked list is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
         head = head.next;
         if (head != null) {
@@ -128,7 +129,7 @@ public class DoublyLinkedList<T> {
 
     public void removeEnd() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Doubly linked list is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
         tail = tail.prev;
         if (tail != null) {
@@ -163,14 +164,14 @@ public class DoublyLinkedList<T> {
 
     public T getBeginning() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Doubly linked list is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
         return head.data;
     }
 
     public T getEnd() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Doubly linked list is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
         return tail.data;
     }
@@ -191,9 +192,9 @@ public class DoublyLinkedList<T> {
         return node.data;
     }
 
-    public void setAt(int index, T item) {
-        if (item == null) {
-            throw new NullPointerException("Specified item is null");
+    public void setAt(int index, T element) {
+        if (element == null) {
+            throw new NullPointerException("Element: " + element);
         }
         if ((index < 0) || (index >= size)) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
@@ -202,7 +203,7 @@ public class DoublyLinkedList<T> {
         int idx = 0;
         while (node != null) {
             if (idx == index) {
-                node.data = item;
+                node.data = element;
                 break;
             }
             idx++;
