@@ -1,6 +1,7 @@
 /*
+* Data structure: Linked list
 * Abstract data type: Singly linked list
-* Version: 1.0.7
+* Version: 1.0.8
 * Author: Mohammad Hasan
 */
 package ds.linked;
@@ -16,12 +17,12 @@ public class SinglyLinkedList<T> {
         }
     }
 
-    private Node head;
     private int size;
+    private Node head;
 
     public SinglyLinkedList() {
-        head = null;
         size = 0;
+        head = null;
     }
 
     public int size() {
@@ -32,39 +33,39 @@ public class SinglyLinkedList<T> {
         return (head == null);
     }
 
-    private Node search(Object item) {
-        if (item == null) {
-            return null;
-        }
+    private Node search(T key) {
         Node node = head;
-        while ((node != null) && !node.data.equals(item)) {
+        while ((node != null) && !key.equals(node.data)) {
             node = node.next;
         }
         return node;
     }
 
-    public boolean contains(Object item) {
-        return ((search(item) == null) ? false : true);
+    public boolean contains(T element) {
+        if (element == null) {
+            return false;
+        }
+        return (search(element) != null);
     }
 
-    public void insertBeginning(T item) {
-        if (item == null) {
-            throw new NullPointerException("Specified item is null");
+    public void insertBeginning(T element) {
+        if (element == null) {
+            throw new NullPointerException("Element: " + element);
         }
-        Node newNode = new Node(item);
+        Node newNode = new Node(element);
         newNode.next = head;
         head = newNode;
         size++;
     }
 
-    public void insertAt(int index, T item) {
-        if (item == null) {
-            throw new NullPointerException("Specified item is null");
+    public void insertAt(int index, T element) {
+        if (element == null) {
+            throw new NullPointerException("Element: " + element);
         }
         if ((index < 0) || (index > size)) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
-        Node newNode = new Node(item);
+        Node newNode = new Node(element);
         if (index == 0) {
             newNode.next = head;
             head = newNode;
@@ -84,11 +85,11 @@ public class SinglyLinkedList<T> {
         size++;
     }
 
-    public void insertEnd(T item) {
-        if (item == null) {
-            throw new NullPointerException("Specified item is null");
+    public void insertEnd(T element) {
+        if (element == null) {
+            throw new NullPointerException("Element: " + element);
         }
-        Node newNode = new Node(item);
+        Node newNode = new Node(element);
         if (isEmpty()) {
             head = newNode;
         } else {
@@ -101,13 +102,13 @@ public class SinglyLinkedList<T> {
         size++;
     }
 
-    public void insert(T item) {
-        insertEnd(item);
+    public void insert(T element) {
+        insertEnd(element);
     }
 
     public void removeBeginning() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Singly linked list is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
         head = head.next;
         size--;
@@ -136,7 +137,7 @@ public class SinglyLinkedList<T> {
 
     public void removeEnd() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Singly linked list is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
         if (head.next == null) {
             head = null;
@@ -152,7 +153,7 @@ public class SinglyLinkedList<T> {
 
     public T getBeginning() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Singly linked list is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
         return head.data;
     }
@@ -175,7 +176,7 @@ public class SinglyLinkedList<T> {
 
     public T getEnd() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Singly linked list is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
         Node node = head;
         while (node.next != null) {
@@ -184,9 +185,9 @@ public class SinglyLinkedList<T> {
         return node.data;
     }
 
-    public void setAt(int index, T item) {
-        if (item == null) {
-            throw new NullPointerException("Specified item is null");
+    public void setAt(int index, T element) {
+        if (element == null) {
+            throw new NullPointerException("Element: " + element);
         }
         if ((index < 0) || (index >= size)) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
@@ -195,7 +196,7 @@ public class SinglyLinkedList<T> {
         int idx = 0;
         while (node != null) {
             if (idx == index) {
-                node.data = item;
+                node.data = element;
                 break;
             }
             node = node.next;
