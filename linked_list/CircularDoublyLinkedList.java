@@ -1,6 +1,7 @@
 /*
+* Data structure: Linked list
 * Abstract data type: Circular doubly linked list
-* Version: 1.0.1
+* Version: 1.0.2
 * Author: Mohammad Hasan
 */
 package ds.linked;
@@ -36,26 +37,26 @@ public class CircularDoublyLinkedList<T> {
         return (head == null);
     }
 
-    private Node search(Object item) {
-        if ((item == null) || isEmpty()) {
+    private Node search(Object element) {
+        if ((element == null) || isEmpty()) {
             return null;
         }
         Node node = head;
-        while ((node != tail) && !node.data.equals(item)) {
+        while ((node != tail) && !node.data.equals(element)) {
             node = node.next;
         }
-        return (node.data.equals(item) ? node : null);
+        return (node.data.equals(element) ? node : null);
     }
 
-    public boolean contains(Object item) {
-        return ((search(item) == null) ? false : true);
+    public boolean contains(Object element) {
+        return (search(element) != null);
     }
 
-    public void insertBeginning(T item) {
-        if (item == null) {
-            throw new NullPointerException("Specified item is null");
+    public void insertBeginning(T element) {
+        if (element == null) {
+            throw new NullPointerException("Element: " + element);
         }
-        Node newNode = new Node(item);
+        Node newNode = new Node(element);
         if (isEmpty()) {
             tail = newNode;
         } else {
@@ -68,11 +69,11 @@ public class CircularDoublyLinkedList<T> {
         size++;
     }
 
-    public void insertEnd(T item) {
-        if (item == null) {
-            throw new NullPointerException("Specified item is null");
+    public void insertEnd(T element) {
+        if (element == null) {
+            throw new NullPointerException("Element: " + element);
         }
-        Node newNode = new Node(item);
+        Node newNode = new Node(element);
         if (isEmpty()) {
             head = newNode;
         } else {
@@ -85,19 +86,19 @@ public class CircularDoublyLinkedList<T> {
         size++;
     }
 
-    public void insertAt(int index, T item) {
+    public void insertAt(int index, T element) {
         if ((index < 0) || (index > size)) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
         if (index == 0) {
-            insertBeginning(item);
+            insertBeginning(element);
         } else if (index == size) {
-            insertEnd(item);
+            insertEnd(element);
         } else {
-            if (item == null) {
-                throw new NullPointerException("Specified item is null");
+            if (element == null) {
+                throw new NullPointerException("Element: " + element);
             }
-            Node newNode = new Node(item);
+            Node newNode = new Node(element);
             Node node = head;
             int idx = 1;
             while (node != tail) {
@@ -115,13 +116,13 @@ public class CircularDoublyLinkedList<T> {
         }
     }
 
-    public void insert(T item) {
-        insertEnd(item);
+    public void insert(T element) {
+        insertEnd(element);
     }
 
     public void removeBeginning() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Circular doubly linked list is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
         if (head == tail) {
             head = null;
@@ -136,7 +137,7 @@ public class CircularDoublyLinkedList<T> {
 
     public void removeEnd() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Circular doubly linked list is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         } 
         if (head == tail) {
             head = null;
@@ -175,14 +176,14 @@ public class CircularDoublyLinkedList<T> {
 
     public T getBeginning() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Circular doubly linked list is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
         return head.data;
     }
 
     public T getEnd() {
         if (isEmpty()) {
-            throw new java.util.NoSuchElementException("Circular doubly linked list is empty");
+            throw new java.util.NoSuchElementException("Size: " + size);
         }
         return tail.data;
     }
@@ -203,12 +204,12 @@ public class CircularDoublyLinkedList<T> {
         return node.data;
     }
 
-    public void setAt(int index, T item) {
+    public void setAt(int index, T element) {
         if ((index < 0) || (index >= size)) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
-        if (item == null) {
-            throw new NullPointerException("Specified item is null");
+        if (element == null) {
+            throw new NullPointerException("Element: " + element);
         }
         Node node = head;
         int idx = 0;
@@ -219,7 +220,7 @@ public class CircularDoublyLinkedList<T> {
             idx++;
             node = node.next;
         }
-        node.data = item;
+        node.data = element;
     }
 
     public void reverse() {
